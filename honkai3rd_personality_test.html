@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>崩坏3性格测试</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+            position: relative;
+            padding: 0;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 0, 100, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(0, 150, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(255, 200, 0, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: float 15s infinite;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            padding: 20px;
+            width: 100%;
+            max-width: 1400px;
+            position: relative;
+        }
+
+        .start-screen-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .honkai-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .honkai-icon {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, rgba(255, 0, 100, 0.3), rgba(0, 150, 255, 0.3));
+            border: 2px solid rgba(255, 0, 100, 0.5);
+            animation: iconPulse 2s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(255, 0, 100, 0.4);
+        }
+
+        .honkai-icon:nth-child(1) { animation-delay: 0s; }
+        .honkai-icon:nth-child(2) { animation-delay: 0.4s; }
+        .honkai-icon:nth-child(3) { animation-delay: 0.8s; }
+        .honkai-icon:nth-child(4) { animation-delay: 1.2s; }
+        .honkai-icon:nth-child(5) { animation-delay: 1.6s; }
+
+        @keyframes iconPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(255, 0, 100, 0.4);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 30px rgba(255, 0, 100, 0.6);
+            }
+        }
+
+        .title {
+            font-size: 3.2rem;
+            background: linear-gradient(135deg, #ff0066 0%, #0096ff 50%, #ff0066 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            position: relative;
+            filter: drop-shadow(0 0 20px rgba(255, 0, 100, 0.5));
+            animation: titleFlicker 4s ease-in-out infinite;
+            text-transform: uppercase;
+        }
+        
+        .title::after {
+            content: '崩坏3性格测试';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #ff0066 0%, #0096ff 50%, #ff0066 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: blur(20px);
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        @keyframes titleFlicker {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(255, 0, 100, 0.5));
+            }
+            50% {
+                filter: drop-shadow(0 0 40px rgba(255, 0, 100, 0.8)) drop-shadow(0 0 60px rgba(0, 150, 255, 0.4));
+            }
+        }
+
+        .subtitle-container {
+            margin-bottom: 45px;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: #ff6699;
+            margin-bottom: 10px;
+            opacity: 0.95;
+            text-shadow: 0 0 10px rgba(255, 0, 100, 0.5);
+        }
+
+        .subtitle-detail {
+            font-size: 1.05rem;
+            color: rgba(0, 150, 255, 0.8);
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #ff0066 0%, #0096ff 100%);
+            border: 2px solid rgba(255, 0, 100, 0.6);
+            padding: 20px 65px;
+            font-size: 1.35rem;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(255, 0, 100, 0.5),
+                        inset 0 1px 3px rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .start-btn:hover::before {
+            left: 100%;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 0 50px rgba(255, 0, 100, 0.7),
+                        inset 0 1px 3px rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 0, 100, 0.9);
+        }
+
+        .start-btn:active {
+            transform: translateY(-2px) scale(1.01);
+        }
+
+        .start-screen-footer {
+            margin-top: 50px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 0, 100, 0.3);
+        }
+
+        .footer-text {
+            font-size: 0.9rem;
+            color: rgba(255, 0, 100, 0.9);
+            margin: 0;
+            animation: textGlow 2s ease-in-out infinite;
+            text-shadow: 0 0 10px rgba(255, 0, 100, 0.5);
+        }
+
+        @keyframes textGlow {
+            0%, 100% {
+                opacity: 0.7;
+                text-shadow: 0 0 10px rgba(255, 0, 100, 0.5);
+            }
+            50% {
+                opacity: 1;
+                text-shadow: 0 0 20px rgba(255, 0, 100, 0.8);
+            }
+        }
+
+        .quiz-container {
+            display: none;
+            background: linear-gradient(135deg, rgba(255, 0, 100, 0.08) 0%, rgba(0, 150, 255, 0.05) 100%);
+            border-radius: 12px;
+            padding: 20px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 0, 100, 0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(255, 0, 100, 0.2), 0 0 60px rgba(0, 150, 255, 0.1);
+            width: 100%;
+        }
+
+        .quiz-header {
+            margin-bottom: 15px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff0066, #0096ff, #ff0066);
+            background-size: 200% 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+            animation: shimmer 2s linear infinite;
+            box-shadow: 0 0 10px rgba(255, 0, 100, 0.6);
+        }
+        
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        .question-number {
+            background: linear-gradient(135deg, #ff0066 0%, #0096ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .encouragement-text {
+            color: rgba(0, 150, 255, 0.9);
+            font-size: 0.95rem;
+            font-style: italic;
+            margin-bottom: 15px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .question-text {
+            color: #e8eef5;
+            font-size: 1.45rem;
+            margin-bottom: 40px;
+            line-height: 1.7;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .option {
+            background: linear-gradient(135deg, rgba(255, 0, 100, 0.1) 0%, rgba(0, 150, 255, 0.05) 100%);
+            border: 2px solid rgba(255, 0, 100, 0.25);
+            padding: 20px 22px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            color: #d4dce8;
+            font-size: 1.1rem;
+            min-height: 68px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 100%;
+            position: relative;
+            overflow: visible;
+        }
+
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 100, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .option:hover {
+            background: linear-gradient(135deg, rgba(255, 0, 100, 0.2) 0%, rgba(255, 0, 100, 0.1) 100%);
+            border-color: rgba(255, 0, 100, 0.6);
+            transform: translateX(4px);
+            box-shadow: 0 0 20px rgba(255, 0, 100, 0.2);
+        }
+
+        .option:hover::before {
+            left: 100%;
+        }
+
+        .option.selected {
+            background: linear-gradient(135deg, rgba(255, 0, 100, 0.3) 0%, rgba(255, 0, 100, 0.15) 100%);
+            border-color: #ff0066;
+            box-shadow: 0 0 20px rgba(255, 0, 100, 0.3), inset 0 0 10px rgba(255, 0, 100, 0.1);
+        }
+
+        .option-letter {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff0066, #0096ff);
+            color: #fff;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-right: 16px;
+            flex-shrink: 0;
+            box-shadow: 0 0 15px rgba(255, 0, 100, 0.5);
+            border: 1px solid rgba(255, 0, 100, 0.4);
+        }
+
+        .option-feedback {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #ff0066, #0096ff);
+            color: #fff;
+            padding: 7px 14px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            z-index: 10;
+            animation: feedbackSlide 0.4s ease;
+            box-shadow: 0 0 15px rgba(255, 0, 100, 0.5);
+            white-space: nowrap;
+        }
+
+        @keyframes feedbackSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(-50%) translateX(15px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(-50%) translateX(0);
+            }
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, rgba(255, 0, 100, 0.15) 0%, rgba(0, 150, 255, 0.1) 100%);
+            border: 2px solid rgba(255, 0, 100, 0.4);
+            padding: 15px 42px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            color: #ff0066;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 100, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, rgba(255, 0, 100, 0.25) 0%, rgba(255, 0, 100, 0.15) 100%);
+            border-color: #ff0066;
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(255, 0, 100, 0.3);
+        }
+
+        .nav-btn:hover:not(:disabled)::before {
+            left: 100%;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        .nav-btn.primary {
+            background: linear-gradient(135deg, #ff0066, #0096ff);
+            border-color: transparent;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255, 0, 100, 0.4);
+        }
+
+        .nav-btn.primary:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(255, 0, 100, 0.5);
+        }
+
+        .fun-tip {
+            color: rgba(0, 150, 255, 0.7);
+            font-size: 0.8rem;
+            text-align: center;
+            margin-top: 18px;
+            padding: 10px;
+            background: rgba(255, 0, 100, 0.08);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 0, 100, 0.2);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-container {
+            display: none;
+            background: linear-gradient(135deg, rgba(255, 0, 100, 0.1) 0%, rgba(0, 150, 255, 0.05) 100%);
+            border-radius: 12px;
+            padding: 20px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 0, 100, 0.35);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(255, 0, 100, 0.2), 0 0 80px rgba(0, 150, 255, 0.1);
+            width: 100%;
+        }
+
+        .result-type {
+            font-size: 1.6rem;
+            background: linear-gradient(135deg, #ff0066 0%, #0096ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+
+        .result-character {
+            font-size: 3.6rem;
+            background: linear-gradient(135deg, #fff 0%, #ff0066 50%, #0096ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 0 20px rgba(255, 0, 100, 0.5));
+            animation: characterPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes characterPulse {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(255, 0, 100, 0.5));
+            }
+            50% {
+                filter: drop-shadow(0 0 40px rgba(255, 0, 100, 0.7));
+            }
+        }
+
+        .personality-analysis {
+            background: linear-gradient(135deg, rgba(255, 0, 100, 0.12) 0%, rgba(0, 150, 255, 0.06) 100%);
+            border: 2px solid rgba(255, 0, 100, 0.3);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: left;
+            line-height: 1.8;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 0, 100, 0.15);
+        }
+
+        .personality-analysis::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff0066, transparent);
+        }
+
+        .personality-analysis-title {
+            background: linear-gradient(135deg, #ff0066 0%, #0096ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .personality-analysis-text {
+            color: #d4dce8;
+            font-size: 1.05rem;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+        }
+
+        .character-intro {
+            background: linear-gradient(135deg, rgba(255, 0, 100, 0.08) 0%, rgba(0, 150, 255, 0.04) 100%);
+            border: 2px solid rgba(255, 0, 100, 0.25);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: left;
+            line-height: 1.8;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .character-intro::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 100, 0.6), transparent);
+        }
+
+        .character-intro-title {
+            background: linear-gradient(135deg, #ff0066 0%, #0096ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.35rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .character-intro-text {
+            color: #d4dce8;
+            font-size: 1.15rem;
+        }
+
+        .character-traits {
+            background: linear-gradient(135deg, rgba(255, 0, 100, 0.08) 0%, rgba(0, 150, 255, 0.04) 100%);
+            border: 2px solid rgba(255, 0, 100, 0.25);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .character-traits::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 100, 0.6), transparent);
+        }
+
+        .character-traits-title {
+            background: linear-gradient(135deg, #ff0066 0%, #0096ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.35rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .trait-item {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .trait-label {
+            width: 140px;
+            color: #d4dce8;
+            font-weight: bold;
+            font-size: 1.05rem;
+        }
+
+        .trait-bar-container {
+            flex: 1;
+            height: 14px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 0 15px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .trait-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff0066, #0096ff);
+            border-radius: 6px;
+            transition: width 1s ease;
+            box-shadow: 0 0 8px rgba(255, 0, 100, 0.6);
+        }
+
+        .trait-value {
+            width: 45px;
+            text-align: right;
+            color: #0096ff;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, #ff0066, #0096ff);
+            border: 2px solid rgba(255, 0, 100, 0.5);
+            padding: 18px 55px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(255, 0, 100, 0.5),
+                        inset 0 1px 3px rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 0 50px rgba(255, 0, 100, 0.6),
+                        inset 0 1px 3px rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 0, 100, 0.8);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 18px;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .quiz-container, .result-container {
+                padding: 22px 18px;
+            }
+
+            .question-text {
+                font-size: 1.15rem;
+                margin-bottom: 28px;
+            }
+
+            .option {
+                padding: 14px 16px;
+                font-size: 0.92rem;
+            }
+
+            .nav-btn {
+                padding: 11px 22px;
+                font-size: 0.9rem;
+            }
+
+            .result-type {
+                font-size: 1.15rem;
+            }
+
+            .result-character {
+                font-size: 2.2rem;
+            }
+
+            .personality-analysis, .character-intro {
+                padding: 18px;
+            }
+
+            .personality-analysis-title, .character-intro-title {
+                font-size: 1.05rem;
+            }
+
+            .personality-analysis-text, .character-intro-text {
+                font-size: 0.98rem;
+            }
+
+            .trait-item {
+                flex-wrap: wrap;
+            }
+
+            .trait-label {
+                width: 100px;
+                font-size: 0.9rem;
+            }
+
+            .trait-bar-container {
+                margin: 0 10px;
+            }
+
+            .trait-value {
+                font-size: 0.9rem;
+                width: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 1.7rem;
+                letter-spacing: 2px;
+            }
+
+            .subtitle {
+                font-size: 0.98rem;
+            }
+
+            .subtitle-detail {
+                font-size: 0.88rem;
+            }
+
+            .honkai-icons {
+                gap: 10px;
+                margin-bottom: 18px;
+            }
+
+            .honkai-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+
+            .start-btn {
+                padding: 13px 35px;
+                font-size: 1.05rem;
+            }
+
+            .start-screen-footer {
+                margin-top: 35px;
+                padding-top: 18px;
+            }
+
+            .footer-text {
+                font-size: 0.82rem;
+            }
+
+            .result-character {
+                font-size: 1.9rem;
+            }
+
+            .option {
+                padding: 13px 15px;
+                font-size: 0.9rem;
+            }
+
+            .option-letter {
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+                margin-right: 12px;
+            }
+
+            .encouragement-text {
+                font-size: 0.78rem;
+            }
+
+            .fun-tip {
+                font-size: 0.72rem;
+                padding: 8px;
+            }
+
+            .option-feedback {
+                font-size: 0.72rem;
+                padding: 5px 10px;
+                right: 10px;
+            }
+
+            .trait-item {
+                flex-wrap: wrap;
+            }
+
+            .trait-label {
+                width: 80px;
+                font-size: 0.8rem;
+            }
+
+            .trait-bar-container {
+                margin: 0 8px;
+                height: 12px;
+            }
+
+            .trait-value {
+                font-size: 0.8rem;
+                width: 35px;
+            }
+
+            .character-traits {
+                padding: 18px;
+            }
+
+            .character-traits-title {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <div id="start-screen">
+            <div class="start-screen-content">
+                <div class="honkai-icons">
+                    <div class="honkai-icon">⚡</div>
+                    <div class="honkai-icon">🌸</div>
+                    <div class="honkai-icon">⚔️</div>
+                    <div class="honkai-icon">🌟</div>
+                    <div class="honkai-icon">💥</div>
+                </div>
+                <h1 class="title">崩坏3性格测试</h1>
+                <div class="subtitle-container">
+                    <p class="subtitle">探索你与哪位女武神最相似</p>
+                    <p class="subtitle-detail">踏上崩坏的战场，发现你的女武神特质</p>
+                </div>
+                <button class="start-btn" onclick="startSurvey()">开始测试</button>
+                <div class="start-screen-footer">
+                    <p class="footer-text">⚡ 崩坏的力量在召唤你...</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="quiz-screen" class="quiz-container">
+            <div class="quiz-header">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="question-number" id="question-number"></div>
+                <div class="encouragement-text" id="encouragement-text"></div>
+            </div>
+            <div class="question-text" id="question-text"></div>
+            <div class="options" id="options"></div>
+            <div class="nav-buttons">
+                <button class="nav-btn" id="prev-btn" onclick="prevQuestion()">上一题</button>
+                <button class="nav-btn primary" id="next-btn" onclick="nextQuestion()">下一题</button>
+            </div>
+            <div class="fun-tip" id="fun-tip"></div>
+        </div>
+
+        <div id="result-screen" class="result-container">
+            <div class="result-type" id="result-type"></div>
+            <div class="result-character" id="result-character"></div>
+            <div class="personality-analysis" id="personality-analysis"></div>
+            <div class="character-intro" id="character-intro"></div>
+            <button class="restart-btn" onclick="restartSurvey()">重新测试</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                text: "当你面对强大的敌人时，你会怎么做？",
+                options: [
+                    "直接冲锋，正面迎战",
+                    "分析敌人弱点，制定策略",
+                    "保护队友，优先确保他们的安全",
+                    "利用环境优势，寻找最佳战斗位置",
+                    "召唤支援，与队友协同作战"
+                ]
+            },
+            {
+                text: "你认为成为一名优秀的女武神最重要的品质是什么？",
+                options: [
+                    "强大的战斗力和勇气",
+                    "冷静的头脑和战略思维",
+                    "对队友的责任感和保护欲",
+                    "灵活的应变能力和适应力",
+                    "团队协作精神和沟通能力"
+                ]
+            },
+            {
+                text: "在日常生活中，你更倾向于哪种风格？",
+                options: [
+                    "活泼开朗，充满活力",
+                    "沉稳冷静，深思熟虑",
+                    "温柔体贴，关心他人",
+                    "独立自主，特立独行",
+                    "善于社交，广交朋友"
+                ]
+            },
+            {
+                text: "当你遇到困难时，你会如何应对？",
+                options: [
+                    "勇敢面对，挑战自我",
+                    "分析问题，寻找解决方案",
+                    "寻求他人帮助，共同解决",
+                    "独自思考，找出突破口",
+                    "调整心态，保持乐观"
+                ]
+            },
+            {
+                text: "你更喜欢哪种战斗风格？",
+                options: [
+                    "近身肉搏，力量型",
+                    "远程攻击，策略型",
+                    "辅助支援，治疗型",
+                    "敏捷灵活，速度型",
+                    "综合全能，平衡型"
+                ]
+            },
+            {
+                text: "在团队中，你更适合什么角色？",
+                options: [
+                    "领导者，冲锋在前",
+                    "军师，出谋划策",
+                    "守护者，保护队友",
+                    "独行侠，执行特殊任务",
+                    "协调者，沟通协调"
+                ]
+            },
+            {
+                text: "你认为什么是最值得守护的东西？",
+                options: [
+                    "自己的信念和荣誉",
+                    "知识和真理",
+                    "家人和朋友",
+                    "个人自由和独立",
+                    "世界的和平与正义"
+                ]
+            },
+            {
+                text: "当你取得胜利时，你会如何庆祝？",
+                options: [
+                    "大声欢呼，分享喜悦",
+                    "冷静总结，分析不足",
+                    "与队友一起庆祝",
+                    "独自享受胜利的喜悦",
+                    "计划下一次挑战"
+                ]
+            },
+            {
+                text: "你对未来的态度是？",
+                options: [
+                    "充满期待，积极面对",
+                    "谨慎规划，稳步前进",
+                    "关心他人，共同成长",
+                    "保持独立，追求自我",
+                    "开放包容，拥抱变化"
+                ]
+            },
+            {
+                text: "你认为力量的真正含义是什么？",
+                options: [
+                    "战胜敌人的能力",
+                    "保护他人的责任",
+                    "内心的坚强和勇气",
+                    "不断超越自我的决心",
+                    "团队协作的力量"
+                ]
+            },
+            {
+                text: "当你看到朋友陷入困境时，你会？",
+                options: [
+                    "毫不犹豫地冲上去帮助",
+                    "冷静分析情况，制定救援计划",
+                    "安抚朋友的情绪，给予支持",
+                    "观察周围环境，寻找最佳时机",
+                    "召集其他朋友一起行动"
+                ]
+            },
+            {
+                text: "你如何处理压力和焦虑？",
+                options: [
+                    "通过运动或战斗释放压力",
+                    "理性分析压力来源，寻找解决方案",
+                    "与朋友聊天，寻求情感支持",
+                    "独自思考，寻找内心的平静",
+                    "通过团队活动分散注意力"
+                ]
+            },
+            {
+                text: "你认为什么是最重要的品质？",
+                options: [
+                    "勇气和决心",
+                    "智慧和洞察力",
+                    "善良和同情心",
+                    "独立和坚韧",
+                    "合作和包容"
+                ]
+            },
+            {
+                text: "当你需要做出重要决定时，你会？",
+                options: [
+                    "凭直觉快速决定",
+                    "仔细分析利弊，权衡选择",
+                    "考虑对他人的影响",
+                    "独立思考，不受外界干扰",
+                    "与团队讨论，共同决策"
+                ]
+            },
+            {
+                text: "你如何看待失败？",
+                options: [
+                    "失败是成功的垫脚石，继续前进",
+                    "从失败中吸取教训，改进策略",
+                    "失败时需要朋友的支持和鼓励",
+                    "失败是个人成长的机会",
+                    "失败是团队学习和进步的机会"
+                ]
+            },
+            {
+                text: "你认为什么是最有意义的成就？",
+                options: [
+                    "战胜强大的敌人",
+                    "解决复杂的问题",
+                    "帮助他人获得幸福",
+                    "实现个人的目标和梦想",
+                    "与团队一起创造奇迹"
+                ]
+            },
+            {
+                text: "当你面对未知的事物时，你会？",
+                options: [
+                    "勇敢探索，充满好奇",
+                    "谨慎观察，收集信息",
+                    "与他人分享，共同探索",
+                    "保持距离，观察其发展",
+                    "与团队一起面对未知"
+                ]
+            },
+            {
+                text: "你认为什么是最重要的价值观？",
+                options: [
+                    "勇气和正义",
+                    "智慧和真理",
+                    "爱和关怀",
+                    "自由和独立",
+                    "合作和团结"
+                ]
+            },
+            {
+                text: "当你与他人发生冲突时，你会？",
+                options: [
+                    "直接表达自己的观点",
+                    "理性分析，寻找解决方案",
+                    "理解对方的立场，寻求和解",
+                    "保持冷静，独立思考",
+                    "寻求第三方的帮助和调解"
+                ]
+            },
+            {
+                text: "你认为什么是最重要的能力？",
+                options: [
+                    "强大的战斗力",
+                    "分析和解决问题的能力",
+                    "理解和关心他人的能力",
+                    "独立思考和决策的能力",
+                    "团队协作和沟通的能力"
+                ]
+            },
+            {
+                text: "当你面对危险时，你会？",
+                options: [
+                    "勇敢面对，毫不退缩",
+                    "冷静评估风险，制定应对计划",
+                    "优先保护他人安全",
+                    "寻找最佳逃生路线",
+                    "与团队一起应对危险"
+                ]
+            },
+            {
+                text: "你认为什么是最重要的目标？",
+                options: [
+                    "成为最强的女武神",
+                    "获得知识和智慧",
+                    "保护重要的人",
+                    "实现个人价值",
+                    "为团队和世界做出贡献"
+                ]
+            },
+            {
+                text: "当你需要学习新技能时，你会？",
+                options: [
+                    "通过实践和体验快速学习",
+                    "系统学习理论知识",
+                    "与他人一起学习，互相帮助",
+                    "独自研究，深入理解",
+                    "通过团队项目学习"
+                ]
+            },
+            {
+                text: "你认为什么是最重要的品质？",
+                options: [
+                    "勇气和冒险精神",
+                    "智慧和理性",
+                    "善良和同情心",
+                    "独立和自主",
+                    "合作和团队精神"
+                ]
+            },
+            {
+                text: "当你面对选择时，你会？",
+                options: [
+                    "选择最具挑战性的道路",
+                    "选择最理性的方案",
+                    "选择对他人最有利的选择",
+                    "选择最符合自己内心的选择",
+                    "选择对团队最有益的选择"
+                ]
+            },
+            {
+                text: "你认为什么是最重要的品质？",
+                options: [
+                    "勇气和决心",
+                    "智慧和洞察力",
+                    "善良和同情心",
+                    "独立和坚韧",
+                    "合作和包容"
+                ]
+            },
+            {
+                text: "当你面对挑战时，你会？",
+                options: [
+                    "勇敢接受挑战",
+                    "分析挑战，制定策略",
+                    "与他人一起面对",
+                    "独自面对，证明自己",
+                    "与团队一起克服挑战"
+                ]
+            },
+            {
+                text: "你认为什么是最重要的品质？",
+                options: [
+                    "勇气和冒险精神",
+                    "智慧和理性",
+                    "善良和同情心",
+                    "独立和自主",
+                    "合作和团队精神"
+                ]
+            },
+            {
+                text: "当你面对困难时，你会？",
+                options: [
+                    "勇敢面对，不退缩",
+                    "分析问题，寻找解决方案",
+                    "寻求他人帮助",
+                    "独自思考，寻找答案",
+                    "与团队一起解决"
+                ]
+            },
+            {
+                text: "你认为什么是最重要的品质？",
+                options: [
+                    "勇气和决心",
+                    "智慧和洞察力",
+                    "善良和同情心",
+                    "独立和坚韧",
+                    "合作和包容"
+                ]
+            },
+            {
+                text: "当你面对压力时，你会？",
+                options: [
+                    "通过运动或战斗释放",
+                    "理性分析，寻找解决方案",
+                    "与朋友聊天，寻求支持",
+                    "独自思考，寻找平静",
+                    "与团队一起应对"
+                ]
+            },
+            {
+                text: "你认为什么是最重要的品质？",
+                options: [
+                    "勇气和冒险精神",
+                    "智慧和理性",
+                    "善良和同情心",
+                    "独立和自主",
+                    "合作和团队精神"
+                ]
+            },
+            {
+                text: "当你面对未知时，你会？",
+                options: [
+                    "勇敢探索",
+                    "谨慎观察",
+                    "与他人分享",
+                    "独自思考",
+                    "与团队一起面对"
+                ]
+            },
+            {
+                text: "你认为什么是最重要的品质？",
+                options: [
+                    "勇气和决心",
+                    "智慧和洞察力",
+                    "善良和同情心",
+                    "独立和坚韧",
+                    "合作和包容"
+                ]
+            },
+            {
+                text: "当你面对选择时，你会？",
+                options: [
+                    "凭直觉选择",
+                    "理性分析",
+                    "考虑他人",
+                    "独立思考",
+                    "与团队讨论"
+                ]
+            },
+            {
+                text: "你认为什么是最重要的品质？",
+                options: [
+                    "勇气和冒险精神",
+                    "智慧和理性",
+                    "善良和同情心",
+                    "独立和自主",
+                    "合作和团队精神"
+                ]
+            },
+            {
+                text: "当你面对挑战时，你会？",
+                options: [
+                    "勇敢接受",
+                    "分析策略",
+                    "与他人一起",
+                    "独自面对",
+                    "与团队一起"
+                ]
+            },
+            {
+                text: "你认为什么是最重要的品质？",
+                options: [
+                    "勇气和决心",
+                    "智慧和洞察力",
+                    "善良和同情心",
+                    "独立和坚韧",
+                    "合作和包容"
+                ]
+            },
+            {
+                text: "当你面对困难时，你会？",
+                options: [
+                    "勇敢面对",
+                    "分析问题",
+                    "寻求帮助",
+                    "独自思考",
+                    "与团队一起"
+                ]
+            },
+            {
+                text: "你认为什么是最重要的品质？",
+                options: [
+                    "勇气和冒险精神",
+                    "智慧和理性",
+                    "善良和同情心",
+                    "独立和自主",
+                    "合作和团队精神"
+                ]
+            },
+            {
+                text: "当你面对压力时，你会？",
+                options: [
+                    "通过运动释放",
+                    "理性分析",
+                    "寻求支持",
+                    "独自思考",
+                    "与团队一起"
+                ]
+            },
+            {
+                text: "你认为什么是最重要的品质？",
+                options: [
+                    "勇气和决心",
+                    "智慧和洞察力",
+                    "善良和同情心",
+                    "独立和坚韧",
+                    "合作和包容"
+                ]
+            },
+            {
+                text: "当你面对未知时，你会？",
+                options: [
+                    "勇敢探索",
+                    "谨慎观察",
+                    "与他人分享",
+                    "独自思考",
+                    "与团队一起"
+                ]
+            },
+            {
+                text: "你认为什么是最重要的品质？",
+                options: [
+                    "勇气和冒险精神",
+                    "智慧和理性",
+                    "善良和同情心",
+                    "独立和自主",
+                    "合作和团队精神"
+                ]
+            },
+            {
+                text: "当你面对选择时，你会？",
+                options: [
+                    "凭直觉",
+                    "理性分析",
+                    "考虑他人",
+                    "独立思考",
+                    "与团队讨论"
+                ]
+            },
+            {
+                text: "你认为什么是最重要的品质？",
+                options: [
+                    "勇气和决心",
+                    "智慧和洞察力",
+                    "善良和同情心",
+                    "独立和坚韧",
+                    "合作和包容"
+                ]
+            },
+            {
+                text: "当你面对挑战时，你会？",
+                options: [
+                    "勇敢接受",
+                    "分析策略",
+                    "与他人一起",
+                    "独自面对",
+                    "与团队一起"
+                ]
+            },
+            {
+                text: "你认为什么是最重要的品质？",
+                options: [
+                    "勇气和冒险精神",
+                    "智慧和理性",
+                    "善良和同情心",
+                    "独立和自主",
+                    "合作和团队精神"
+                ]
+            },
+            {
+                text: "当你面对困难时，你会？",
+                options: [
+                    "勇敢面对",
+                    "分析问题",
+                    "寻求帮助",
+                    "独自思考",
+                    "与团队一起"
+                ]
+            },
+            {
+                text: "你认为什么是最重要的品质？",
+                options: [
+                    "勇气和决心",
+                    "智慧和洞察力",
+                    "善良和同情心",
+                    "独立和坚韧",
+                    "合作和包容"
+                ]
+            },
+            {
+                text: "当你面对压力时，你会？",
+                options: [
+                    "通过运动释放",
+                    "理性分析",
+                    "寻求支持",
+                    "独自思考",
+                    "与团队一起"
+                ]
+            },
+            {
+                text: "你认为什么是最重要的品质？",
+                options: [
+                    "勇气和冒险精神",
+                    "智慧和理性",
+                    "善良和同情心",
+                    "独立和自主",
+                    "合作和团队精神"
+                ]
+            },
+            {
+                text: "当你面对未知时，你会？",
+                options: [
+                    "勇敢探索",
+                    "谨慎观察",
+                    "与他人分享",
+                    "独自思考",
+                    "与团队一起"
+                ]
+            }
+        ];
+
+        const typeMapping = ["勇猛型", "智慧型", "守护型", "独立型", "协作型"];
+
+        const charactersByType = {
+            "勇猛型": ["琪亚娜·卡斯兰娜", "八重樱", "符华"],
+            "智慧型": ["德丽莎·阿波卡利斯", "布洛妮娅·扎伊切克", "希儿·芙乐艾"],
+            "守护型": ["芽衣·雷电", "丽塔·洛丝薇瑟", "幽兰黛尔"],
+            "独立型": ["符华（班长）", "卡莲·卡斯兰娜", "帕朵菲莉丝"],
+            "协作型": ["爱莉希雅", "梅比乌斯", "克莱因"]
+        };
+
+        const personalityAnalysis = {
+            "勇猛型": "你是一个充满勇气和力量的人，面对挑战从不退缩。你有着强烈的正义感和责任感，总是愿意为了保护他人而战斗。你的性格开朗活泼，充满活力，是团队中的核心力量。你相信通过自己的努力和勇气，可以战胜任何困难。",
+            "智慧型": "你是一个冷静理性的人，善于分析问题和制定策略。你有着丰富的知识和敏锐的洞察力，总是能够找到问题的关键所在。你的思维缜密，考虑周全，是团队中的智囊团。你相信通过智慧和策略，可以以最小的代价获得最大的胜利。",
+            "守护型": "你是一个温柔体贴的人，总是关心他人的感受和需求。你有着强烈的保护欲，愿意为了守护重要的人而付出一切。你的性格沉稳可靠，是团队中的守护者。你相信通过爱和关怀，可以创造一个更美好的世界。",
+            "独立型": "你是一个独立自主的人，有着自己独特的想法和见解。你不随波逐流，坚持自己的信念和原则。你的性格冷静内敛，善于独立思考和解决问题。你相信通过自己的努力和坚持，可以实现自己的目标。",
+            "协作型": "你是一个善于团队协作的人，有着出色的沟通和协调能力。你能够与不同性格的人相处融洽，是团队中的粘合剂。你的性格开朗乐观，充满活力，总是能够带动团队的氛围。你相信通过团队的力量，可以创造出更大的成就。"
+        };
+
+        const characterIntros = {
+            "琪亚娜·卡斯兰娜": "琪亚娜是卡斯兰娜家族的后裔，拥有强大的律者之力。她性格开朗活泼，充满正义感，总是为了保护他人而战斗。她有着不服输的精神，面对困难从不退缩，是团队中的核心力量。",
+            "八重樱": "八重樱是前文明纪元的女武神，性格温柔善良，但在战斗中却异常强大。她有着悲惨的过去，但依然保持着对生活的希望。她的剑术精湛，是一名优秀的战士。",
+            "符华": "符华是神州的守护者，有着数千年的战斗经验。她性格沉稳冷静，总是以大局为重。她的实力强大，是团队中的可靠后盾。",
+            "德丽莎·阿波卡利斯": "德丽莎是天命的大主教，性格活泼可爱，但在关键时刻却非常可靠。她有着丰富的知识和智慧，总是能够制定出有效的战略。",
+            "布洛妮娅·扎伊切克": "布洛妮娅是前逆熵的成员，性格冷静理性，善于分析问题。她是一名优秀的机甲驾驶员，有着出色的战斗技巧。",
+            "希儿·芙乐艾": "希儿是量子之海的居民，性格温柔内向，但在战斗中却展现出强大的力量。她有着双重人格，是一名神秘而强大的战士。",
+            "芽衣·雷电": "芽衣是雷电家族的后裔，性格温柔体贴，总是关心他人的感受。她有着强大的雷之律者之力，是团队中的守护者。",
+            "丽塔·洛丝薇瑟": "丽塔是天命的S级女武神，性格优雅从容，有着出色的战斗技巧。她总是以最完美的姿态完成任务，是一名真正的淑女战士。",
+            "幽兰黛尔": "幽兰黛尔是天命的最强女武神之一，性格坚定执着，有着强烈的责任感。她的实力强大，是团队中的领袖。",
+            "卡莲·卡斯兰娜": "卡莲是卡斯兰娜家族的祖先，性格善良勇敢，总是为了正义而战斗。她有着悲惨的命运，但依然保持着对美好事物的追求。",
+            "帕朵菲莉丝": "帕朵菲莉丝是逐火之蛾的成员，性格活泼开朗，喜欢收集各种有趣的东西。她有着独特的战斗风格，是一名充满活力的战士。",
+            "爱莉希雅": "爱莉希雅是逐火之蛾的成员，性格开朗乐观，总是充满活力。她有着强大的律者之力，是团队中的开心果。",
+            "梅比乌斯": "梅比乌斯是逐火之蛾的成员，性格高傲冷漠，有着丰富的知识和智慧。她是一名优秀的科学家，为了实现自己的目标不择手段。",
+            "克莱因": "克莱因是逆熵的科学家，性格内向害羞，但在科学领域却有着卓越的成就。她总是默默地为团队贡献自己的力量。"
+        };
+
+        let currentQuestion = 0;
+        let answers = new Array(questions.length).fill(undefined);
+
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        function startSurvey() {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('quiz-screen').style.display = 'block';
+            currentQuestion = 0;
+            answers = new Array(questions.length).fill(undefined);
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('question-number').textContent = `问题 ${currentQuestion + 1} / ${questions.length}`;
+            document.getElementById('question-text').textContent = question.text;
+            
+            const progressPercent = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progress-fill').style.width = progressPercent + '%';
+            
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+            
+            const letters = ['A', 'B', 'C', 'D', 'E'];
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option' + (answers[currentQuestion] === index ? ' selected' : '');
+                optionDiv.innerHTML = `
+                    <span class="option-letter">${letters[index]}</span>
+                    <span class="option-content">${option}</span>
+                `;
+                if (answers[currentQuestion] === index) {
+                    const feedback = document.createElement('span');
+                    feedback.className = 'option-feedback';
+                    feedback.textContent = '已选择';
+                    optionDiv.appendChild(feedback);
+                }
+                optionDiv.onclick = () => selectOption(index);
+                optionsContainer.appendChild(optionDiv);
+            });
+
+            updateNavigationButtons();
+            showEncouragement();
+            showFunTip();
+        }
+
+        function selectOption(index) {
+            answers[currentQuestion] = index;
+            showQuestion();
+        }
+
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.textContent = '查看结果';
+            } else {
+                nextBtn.textContent = '下一题';
+            }
+        }
+
+        function showEncouragement() {
+            const encouragements = [
+                "继续前进，女武神！",
+                "你的选择决定了你的命运...",
+                "崩坏的力量在你手中...",
+                "相信自己的直觉...",
+                "每一步都在接近真相...",
+                "你的勇气正在被考验...",
+                "队友的力量与你同在...",
+                "胜利的光芒在前方..."
+            ];
+            const randomIndex = Math.floor(Math.random() * encouragements.length);
+            document.getElementById('encouragement-text').textContent = encouragements[randomIndex];
+        }
+
+        function showFunTip() {
+            const tips = [
+                "💡 提示：凭直觉选择可能更准确哦~",
+                "⚔️ 女武神的力量在你心中！",
+                "🌟 每一个选择都很重要！",
+                "🌸 相信自己的判断！",
+                "⚡ 崩坏的战场在等待你！"
+            ];
+            const randomIndex = Math.floor(Math.random() * tips.length);
+            document.getElementById('fun-tip').textContent = tips[randomIndex];
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (answers[currentQuestion] === undefined) {
+                alert('请选择一个选项！');
+                return;
+            }
+            
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            } else {
+                finishSurvey();
+            }
+        }
+
+        function getCharacterTraits(character) {
+            const traits = {
+                "琪亚娜·卡斯兰娜": { 勇气: 95, 智慧: 75, 善良: 85, 独立: 80, 协作: 85 },
+                "八重樱": { 勇气: 85, 智慧: 80, 善良: 90, 独立: 85, 协作: 75 },
+                "符华": { 勇气: 90, 智慧: 90, 善良: 80, 独立: 95, 协作: 80 },
+                "德丽莎·阿波卡利斯": { 勇气: 80, 智慧: 95, 善良: 90, 独立: 75, 协作: 90 },
+                "布洛妮娅·扎伊切克": { 勇气: 85, 智慧: 95, 善良: 80, 独立: 90, 协作: 85 },
+                "希儿·芙乐艾": { 勇气: 80, 智慧: 85, 善良: 95, 独立: 85, 协作: 80 },
+                "芽衣·雷电": { 勇气: 85, 智慧: 85, 善良: 95, 独立: 80, 协作: 90 },
+                "丽塔·洛丝薇瑟": { 勇气: 90, 智慧: 90, 善良: 85, 独立: 85, 协作: 85 },
+                "幽兰黛尔": { 勇气: 95, 智慧: 85, 善良: 85, 独立: 90, 协作: 90 },
+                "卡莲·卡斯兰娜": { 勇气: 90, 智慧: 80, 善良: 95, 独立: 90, 协作: 75 },
+                "帕朵菲莉丝": { 勇气: 85, 智慧: 75, 善良: 85, 独立: 95, 协作: 80 },
+                "爱莉希雅": { 勇气: 90, 智慧: 85, 善良: 95, 独立: 80, 协作: 95 },
+                "梅比乌斯": { 勇气: 85, 智慧: 95, 善良: 70, 独立: 95, 协作: 75 },
+                "克莱因": { 勇气: 75, 智慧: 95, 善良: 90, 独立: 85, 协作: 85 }
+            };
+            return traits[character] || { 勇气: 50, 智慧: 50, 善良: 50, 独立: 50, 协作: 50 };
+        }
+
+        function finishSurvey() {
+            const optionCounts = [0, 0, 0, 0, 0];
+            
+            for (let i = 0; i < questions.length; i++) {
+                if (answers[i] !== undefined) {
+                    optionCounts[answers[i]]++;
+                }
+            }
+            
+            let maxCount = -1;
+            let maxIndex = 0;
+            for (let i = 0; i < optionCounts.length; i++) {
+                if (optionCounts[i] > maxCount) {
+                    maxCount = optionCounts[i];
+                    maxIndex = i;
+                }
+            }
+            
+            const type = typeMapping[maxIndex];
+            const characters = charactersByType[type];
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            const character = characters[randomIndex];
+            const traits = getCharacterTraits(character);
+            
+            document.getElementById('quiz-screen').style.display = 'none';
+            document.getElementById('result-screen').style.display = 'block';
+            document.getElementById('result-type').textContent = type;
+            document.getElementById('result-character').textContent = character;
+            
+            document.getElementById('personality-analysis').innerHTML = `
+                <div class="personality-analysis-title">性格分析</div>
+                <div class="personality-analysis-text">${personalityAnalysis[type]}</div>
+            `;
+            
+            document.getElementById('character-intro').innerHTML = `
+                <div class="character-intro-title">角色介绍 - ${character}</div>
+                <div class="character-intro-text">${characterIntros[character]}</div>
+            `;
+            
+            const traitsHTML = `
+                <div class="character-traits-title">角色特质</div>
+                ${Object.entries(traits).map(([trait, value]) => `
+                    <div class="trait-item">
+                        <span class="trait-label">${trait}</span>
+                        <div class="trait-bar-container">
+                            <div class="trait-bar" style="width: ${value}%"></div>
+                        </div>
+                        <span class="trait-value">${value}%</span>
+                    </div>
+                `).join('')}
+            `;
+            
+            const traitsContainer = document.createElement('div');
+            traitsContainer.className = 'character-traits';
+            traitsContainer.innerHTML = traitsHTML;
+            
+            const restartBtn = document.querySelector('.restart-btn');
+            if (restartBtn) {
+                restartBtn.parentNode.insertBefore(traitsContainer, restartBtn);
+            }
+        }
+
+        function restartSurvey() {
+            document.getElementById('result-screen').style.display = 'none';
+            document.getElementById('start-screen').style.display = 'block';
+            currentQuestion = 0;
+            answers = new Array(questions.length).fill(undefined);
+        }
+
+        createParticles();
+    </script>
+</body>
+</html>
