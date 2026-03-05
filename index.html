@@ -1689,9 +1689,9 @@
             traitsContainer.className = 'character-traits';
             traitsContainer.innerHTML = traitsHTML;
             
-            const restartBtn = document.querySelector('.restart-btn');
-            if (restartBtn) {
-                restartBtn.parentNode.insertBefore(traitsContainer, restartBtn);
+            const resultScreen = document.getElementById('result-screen');
+            if (resultScreen) {
+                resultScreen.appendChild(traitsContainer);
             }
         }
 
