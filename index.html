@@ -946,7 +946,6 @@
             <div class="result-character" id="result-character"></div>
             <div class="personality-analysis" id="personality-analysis"></div>
             <div class="character-intro" id="character-intro"></div>
-            <button class="restart-btn" onclick="restartSurvey()">重新测试</button>
         </div>
     </div>
 
@@ -1476,6 +1475,7 @@
             "琪亚娜·卡斯兰娜": "琪亚娜是卡斯兰娜家族的后裔，拥有强大的律者之力。她性格开朗活泼，充满正义感，总是为了保护他人而战斗。她有着不服输的精神，面对困难从不退缩，是团队中的核心力量。",
             "八重樱": "八重樱是前文明纪元的女武神，性格温柔善良，但在战斗中却异常强大。她有着悲惨的过去，但依然保持着对生活的希望。她的剑术精湛，是一名优秀的战士。",
             "符华": "符华是神州的守护者，有着数千年的战斗经验。她性格沉稳冷静，总是以大局为重。她的实力强大，是团队中的可靠后盾。",
+            "符华（班长）": "符华作为圣芙蕾雅学园的班长，展现出了不同的一面。她性格严谨认真，对待学生严格但关心，总是以身作则。她有着强烈的责任感，是学生们的榜样。",
             "德丽莎·阿波卡利斯": "德丽莎是天命的大主教，性格活泼可爱，但在关键时刻却非常可靠。她有着丰富的知识和智慧，总是能够制定出有效的战略。",
             "布洛妮娅·扎伊切克": "布洛妮娅是前逆熵的成员，性格冷静理性，善于分析问题。她是一名优秀的机甲驾驶员，有着出色的战斗技巧。",
             "希儿·芙乐艾": "希儿是量子之海的居民，性格温柔内向，但在战斗中却展现出强大的力量。她有着双重人格，是一名神秘而强大的战士。",
@@ -1617,6 +1617,7 @@
                 "琪亚娜·卡斯兰娜": { 勇气: 95, 智慧: 75, 善良: 85, 独立: 80, 协作: 85 },
                 "八重樱": { 勇气: 85, 智慧: 80, 善良: 90, 独立: 85, 协作: 75 },
                 "符华": { 勇气: 90, 智慧: 90, 善良: 80, 独立: 95, 协作: 80 },
+                "符华（班长）": { 勇气: 85, 智慧: 95, 善良: 85, 独立: 90, 协作: 85 },
                 "德丽莎·阿波卡利斯": { 勇气: 80, 智慧: 95, 善良: 90, 独立: 75, 协作: 90 },
                 "布洛妮娅·扎伊切克": { 勇气: 85, 智慧: 95, 善良: 80, 独立: 90, 协作: 85 },
                 "希儿·芙乐艾": { 勇气: 80, 智慧: 85, 善良: 95, 独立: 85, 协作: 80 },
@@ -1692,13 +1693,6 @@
             if (restartBtn) {
                 restartBtn.parentNode.insertBefore(traitsContainer, restartBtn);
             }
-        }
-
-        function restartSurvey() {
-            document.getElementById('result-screen').style.display = 'none';
-            document.getElementById('start-screen').style.display = 'block';
-            currentQuestion = 0;
-            answers = new Array(questions.length).fill(undefined);
         }
 
         createParticles();
